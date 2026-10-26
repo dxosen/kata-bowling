@@ -5,7 +5,7 @@ class Jogo:
    
     def lancar(self, pinos): 
     
-        if self._total_lancamentos < 20:
+        if self._total_lancamentos < 2:
             if pinos <= 10:
                 self._pontuacao += pinos
                 self._total_lancamentos += 1
