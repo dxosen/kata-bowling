@@ -36,6 +36,7 @@ def test_duas_jogadas(jogo):
     
     assert jogo.pontuacao() == 8
 
+
 def test_strike(jogo):
 
     # Jogada 1
@@ -63,3 +64,22 @@ def test_jogo_perfeito(jogo):
     for _ in range(12):
         jogo.lancar(10)
     assert jogo.pontuacao() == 300
+
+
+def test_tres_jogadas_strike(jogo):
+    # Jogada 1
+    jogo.lancar(3)
+    jogo.lancar(2)
+    
+    # Jogada 2 
+    jogo.lancar(10)
+
+    #jogada 3
+    jogo.lancar(3)
+    jogo.lancar(0)
+
+    # Jogada 4
+    jogo.lancar(5)
+    jogo.lancar(2) 
+    
+    assert jogo.pontuacao() == 28
