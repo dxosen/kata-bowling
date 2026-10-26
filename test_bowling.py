@@ -46,3 +46,15 @@ def test_strike(jogo):
     jogo.lancar(4)
     
     assert jogo.pontuacao() == 24
+
+def test_um_spare(jogo):
+    
+    # Jogada 1
+    jogo.lancar(5)
+    jogo.lancar(5)
+    
+    # Jogada 2
+    jogo.lancar(3)
+    jogo.lancar(4)
+    
+    assert jogo.pontuacao() == 20
