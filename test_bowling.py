@@ -58,3 +58,8 @@ def test_um_spare(jogo):
     jogo.lancar(4)
     
     assert jogo.pontuacao() == 20
+
+def test_jogo_perfeito(jogo):
+    for _ in range(12):
+        jogo.lancar(10)
+    assert jogo.pontuacao() == 300
