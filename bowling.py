@@ -3,43 +3,38 @@ class Jogo:
         self._pontuacao = 0  
         self._jogada_atual = 1  
         self._num_lancamento_na_jogada = 1  
-        self._pinos_primeiro_lancamento = 0  
-        self._bonus_spare_pendente = False  
-        self._bonus_strike_restantes = 0  
+        self._bonus_futuros = [0] * 40 
+        self._indice_lancamento = 0
+        self._pinos_primeiro_lancamento = 0
    
-    def lancar(self, pinos): 
-        if self._jogada_atual > 10 and not self._bonus_spare_pendente and self._bonus_strike_restantes == 0:
-            return
-
+    def lancar(self, pinos: int): 
         if pinos > 10:
             return
 
-        if self._bonus_spare_pendente:
-            self._pontuacao += pinos
-            self._bonus_spare_pendente = False
+        if self._jogada_atual > 10:
+            multiplicador = self._bonus_futuros[self._indice_lancamento]
+        else:
+            multiplicador = 1 + self._bonus_futuros[self._indice_lancamento]
 
-        if self._bonus_strike_restantes > 0:
-            self._pontuacao += pinos
-            self._bonus_strike_restantes -= 1
-            if self._bonus_strike_restantes == 2: 
-                self._pontuacao += pinos
+        self._pontuacao += pinos * multiplicador
 
         if self._jogada_atual <= 10:
-            self._pontuacao += pinos
-
             if self._num_lancamento_na_jogada == 1:
                 if pinos == 10:  
-                    self._bonus_strike_restantes += 2
+                    self._bonus_futuros[self._indice_lancamento + 1] += 1
+                    self._bonus_futuros[self._indice_lancamento + 2] += 1
                     self._jogada_atual += 1
                 else:
                     self._pinos_primeiro_lancamento = pinos
                     self._num_lancamento_na_jogada = 2
             else:
-                if self._pinos_primeiro_lancamento + pinos == 10:
-                    self._bonus_spare_pendente = True
+                if self._pinos_primeiro_lancamento + pinos == 10:  
+                    self._bonus_futuros[self._indice_lancamento + 1] += 1
                 
                 self._jogada_atual += 1
                 self._num_lancamento_na_jogada = 1
+        
+        self._indice_lancamento += 1
             
     def pontuacao(self):
         return self._pontuacao
